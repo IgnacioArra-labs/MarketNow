@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home | Precios</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div id="app">
+        
+        <header class="header">
+            <div class="header-left">
+                <h1>El Mercado Hoy</h1>
+            </div>
+            <div class="header-center">
+                <input type="text" v-model="search" placeholder="Buscar producto...">
+            </div>
+            <div class="header-right">
+                <button class="header-btn">Contacto</button>
+                <button class="header-btn">Sobre Nosotros</button>
+                <button class="header-btn">Ayuda</button>
+            </div>
+        </header>
+
+        
+        <div class="marquee-container">
+            <div class="marquee">
+                <div v-for="item in items" :key="item.name" class="marquee-item">
+                    {{ item.name }}: <span>${{ item.price.toFixed(2) }} / kg</span>
+                </div>
+            </div>
+        </div>
+
+       
+        <main class="grid">
+            <div v-for="item in filteredItems" :key="item.name" class="card">
+                <p :class="['change', item.change > 0 ? 'up' : 'down']">
+                    {{ item.change > 0 ? '▲' : '▼' }} {{ Math.abs(item.change).toFixed(2) }}%
+                </p>
+                <div class="card-header">
+                    <h2>{{ item.name }}</h2>
+                    <p class="price">${{ item.price.toFixed(2) }} / Cajón</p>
+                </div>
+                <div class="chart-container">
+                    <canvas :id="'chart-' + item.name"></canvas>
+                </div>
+                <div class="additional-info">
+                    <div class="info-item">
+                        <span>Stock:</span>
+                        <span>Alta</span>
+                    </div>
+                    <div class="info-item">
+                        <span>Variedad:</span>
+                        <span>Premium</span>
+                    </div>
+                    <div class="info-item">
+                        <span>Origen:</span>
+                        <span>Argentina</span>
+                    </div>
+                    <div class="info-item">
+                        <span>Última Actualización:</span>
+                        <span>2h</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+  
+        <section class="puestos">
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
